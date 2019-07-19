@@ -1,8 +1,9 @@
-const search = `<form action="#" method="get">
-<input type="search" id="search-input" class="search-input" placeholder="Search...">
-<input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
-</form>`;
+// const search = `<form action="#" method="get">
+// <input type="search" id="search-input" class="search-input" placeholder="Search...">
+// <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
+// </form>`;
 
+//Getting the employees data and putting it in an array.  
 let listOfEmployees = [];
 $.ajax({
     url: 'https://randomuser.me/api/?results=12&nat=us',
@@ -14,6 +15,9 @@ $.ajax({
         }
 });
 
+
+// looping through the array of employees, and putting it next to one another, making a gallery.
+// and then adding it to the page.
 function employeeCards(employee){
     for (let i=0; i<listOfEmployees.length; i++){
     let div = `<div class="card" index="${i}">
@@ -29,6 +33,8 @@ function employeeCards(employee){
         $("#gallery").append(div);  
     }
 
+
+    // Selecting the whole card, not just a certain section of the card.  
     function recursiveSearch(element){
         if(element.hasClass("card")){
             return element;
@@ -37,8 +43,9 @@ function employeeCards(employee){
         }
     }
     
+
+    // When clicking the card, the modal for that card pops up.  
     $(".card").on("click", function (event){
-        //modal();
         $(".modal-container").show();
         let clicked = recursiveSearch($(event.target)).attr("index");
         console.log(clicked);
@@ -48,11 +55,12 @@ function employeeCards(employee){
 }
 
 
-
+// Creating the modal.
 function modal(employee, index){
-    let options = {date:"short"};
-    $(".modal-container").remove();
+    let options = {date:"short"}; //formatting the date.
+    $(".modal-container").remove(); //removing the modal that was already there, so new modal can show.
 
+    //HTML for modal.
     let modalHTML = `<div class="modal-container">
     <div class="modal">
         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -74,13 +82,16 @@ function modal(employee, index){
         <button type="button" id="modal-next" class="modal-next btn">Next</button>
     </div>
     </div>`;
-    $("body").append(modalHTML);
+    $("body").append(modalHTML); //appending the modal to the body.
 
+    //When the "X" is clicked, the modal is removed.
     $("#modal-close-btn").on("click", function (event){
         $(".modal-container").remove();
     });
 
+    // When "PREV" button is clicked, the modal shows the previous employee. 
     $("#modal-prev").on("click", function (event){
+
         let prevIndex = index==0 ? listOfEmployees.length-1 : index-1;
 
         console.log(index);
@@ -88,6 +99,7 @@ function modal(employee, index){
         modal(selectedEmployee, prevIndex);
     });
 
+    // When "NEXT" button is clicked, the modal shows the previous employee. 
     $("#modal-next").on("click", function (event){
 
         let nextIndex;
@@ -107,7 +119,6 @@ $(".search-container").append(search);
 //   // Declare variables
 //   ul = document.getElementById("myUL");
 //   li = ul.getElementsByTagName('li');
-
 //   let searchWord = $("#search-input").val().toLowerCase();
 //   let cardsNumber = $(".card").length;
 
