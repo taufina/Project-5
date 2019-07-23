@@ -16,7 +16,7 @@ html, body {
 body {
     font-family: "Nunito", sans-serif;
     text-align: center;
-    background: rgba(235, 235, 235, 0.9);
+    background: rgba(15, 65, 109, 0.9);
 }
 
 header {
@@ -29,8 +29,8 @@ header {
 }
 
 header h1 {
-    font-size: 1.25em;
-    color: rgba(50, 50, 50, 0.9);
+    font-size: 1.5em;
+    color: rgba(255, 255, 255, 0.9);
     margin-top: 35px;
 }
 
@@ -87,8 +87,8 @@ header h1 {
     max-width: 360px;
     margin: 10px 10px 20px;
     padding: 10px;
-    background: rgba(245, 245, 245, 0.9);
-    border-radius: 0.25em;
+    background: rgba(208, 233, 245, 0.9);
+    border-radius: 3em;
     border: 1px solid rgba(50, 50, 50, 0.3);
     transition: .4s ease-out;
     overflow: hidden;
@@ -140,8 +140,8 @@ header h1 {
     min-height: 415px;
     margin: 10px auto auto;
     padding-bottom: 15px;
-    background: rgba(255, 255, 255, 1);
-    border-radius: 0.25em;
+    background: rgba(208, 233, 245, 0.9);
+    border-radius: 2em;
     border: 1px solid rgba(100, 100, 100, 0.3);
     transition: .4s ease-out;
 }
@@ -188,8 +188,8 @@ header h1 {
     max-width: 420px;
     padding: 10px 15px 15px;;
     margin: 10px auto auto;
-    background: rgba(255, 255, 255, 1);
-    border-radius: 0.25em;
+    background:  rgba(208, 233, 245, 0.9);
+    border-radius: 2em;
     border: 1px solid rgba(100, 100, 100, 0.3);
 }
 

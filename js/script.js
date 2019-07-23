@@ -1,9 +1,5 @@
-// const search = `<form action="#" method="get">
-// <input type="search" id="search-input" class="search-input" placeholder="Search...">
-// <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
-// </form>`;
 
-//Getting the employees data and putting it in an array.  
+// Getting the employees data and putting it in an array.  
 let listOfEmployees = [];
 $.ajax({
     url: 'https://randomuser.me/api/?results=12&nat=us',
@@ -11,7 +7,7 @@ $.ajax({
     success: function(data){
         console.log(data);
         listOfEmployees = data.results;
-        employeeCards();
+        employeeCards(listOfEmployees);
         }
 });
 
@@ -19,15 +15,15 @@ $.ajax({
 // looping through the array of employees, and putting it next to one another, making a gallery.
 // and then adding it to the page.
 function employeeCards(employee){
-    for (let i=0; i<listOfEmployees.length; i++){
+    for (let i=0; i<employee.length; i++){
     let div = `<div class="card" index="${i}">
         <div class="card-img-container">
-            <img class="card-img" src=${listOfEmployees[i].picture.large} alt="profile picture">
+            <img class="card-img" src=${employee[i].picture.large} alt="profile picture">
         </div>
         <div class="card-info-container">
-            <h3 id="name" class="card-name cap">${listOfEmployees[i].name.first} ${listOfEmployees[i].name.last}</h3>
-            <p class="card-text">${listOfEmployees[i].email}</p>
-            <p class="card-text cap">${listOfEmployees[i].location.city}, ${listOfEmployees[i].location.state}</p>
+            <h3 id="name${i}" class="card-name cap">${employee[i].name.first} ${employee[i].name.last}</h3>
+            <p class="card-text">${employee[i].email}</p>
+            <p class="card-text cap">${employee[i].location.city}, ${employee[i].location.state}</p>
         </div>
         </div>`;
         $("#gallery").append(div);  
@@ -61,6 +57,7 @@ function modal(employee, index){
     $(".modal-container").remove(); //removing the modal that was already there, so new modal can show.
 
     //HTML for modal.
+    
     let modalHTML = `<div class="modal-container">
     <div class="modal">
         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -101,10 +98,7 @@ function modal(employee, index){
 
     // When "NEXT" button is clicked, the modal shows the previous employee. 
     $("#modal-next").on("click", function (event){
-
-        let nextIndex;
-        if (index==listOfEmployees.length-1){nextIndex = 0}else{nextIndex = index+1}
-        //let nextIndex = index==listOfEmployees.length-1 ? 0 : index+1;
+        let nextIndex = index==listOfEmployees.length-1 ? 0 : index+1;
 
         console.log(index);
         let selectedEmployee = listOfEmployees[nextIndex];
@@ -112,28 +106,25 @@ function modal(employee, index){
     });
 }
 
+// Creating the search box and appending it.
+
+const search = `<form action="#" method="get">
+<input type="search" id="search-input" class="search-input" placeholder="Search...">
+<input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+</form>`;
 
 $(".search-container").append(search);
 
-// function myFunction() {
-//   // Declare variables
-//   ul = document.getElementById("myUL");
-//   li = ul.getElementsByTagName('li');
-//   let searchWord = $("#search-input").val().toLowerCase();
-//   let cardsNumber = $(".card").length;
-
-//   // Loop through all list items, and hide those who don't match the search query
-//   for (let i = 0; i < cardsNumber; i++) {
-//       $(".card")[i]
-//     a = li[i].getElementsByTagName("a")[0];
-//     txtValue = a.textContent || a.innerText;
-//     if (listOfEmployees[i].name.toUpperCase().indexOf(filter) > -1) {
-//       li[i].style.display = "";
-//     } else {
-//       li[i].style.display = "none";
-//     }
-//   }
-// }
-console.log(listOfEmployees);
-
-
+// On clicking the search button, the employee's name that matches shows up only.
+// If the search box is empty when clicking the search button, then all the employees show up again.
+$("#search-submit").on("click", function(){
+    $(".card").hide();
+    let wordSearched = $(".search-input").val().toLowerCase();
+    let searchedResults = listOfEmployees.filter(employee => employee.name.first.includes(wordSearched) || employee.name.last.includes(wordSearched));
+    console.log(searchedResults);
+    if(wordSearched == ""){
+        employeeCards(listOfEmployees);
+    } else {
+        employeeCards(searchedResults);
+    } 
+})
